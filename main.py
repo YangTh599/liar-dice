@@ -118,42 +118,15 @@ def main(): # MAIN FUNCTION
     clock = pygame.time.Clock()
     # ADD ALL OBJECTS/CLASSES BELOW HERE
 
-    p1 = "Thayer"
-    p2 = "Lucas"
-    p3 = "Apollos"
-    p4 = "Josh"
-
-    liars = liar_bar.Bar(4,p1, p2, p3 ,p4)
-
-    p1_button = boxes.Button(window, 10, 10,200,200,p1)
-    p2_button = boxes.Button(window, SCREEN_WIDTH - 210, 10,200,200,p2)
-    p3_button = boxes.Button(window, 10, SCREEN_HEIGHT - 210,200,200,p3)
-    p4_button = boxes.Button(window, SCREEN_WIDTH - 210, SCREEN_HEIGHT - 210,200,200,p4)
-
     reset = boxes.Button (window, SCREEN_WIDTH//2 -25, SCREEN_HEIGHT//2 - 25, 50,50,"RESET",BLACK)
 
-    buttons = [p1_button, p2_button,p3_button,p4_button,reset]
+    d1 = boxes.Text_box(window, 10, 10, 50, 50, str(rnd(1,6)), BLACK)
+    d2 = boxes.Text_box(window, 10, 65, 50, 50, str(rnd(1,6)), BLACK)
+    d3 = boxes.Text_box(window, 10, 120, 50, 50, str(rnd(1,6)), BLACK)
+    d4 = boxes.Text_box(window, 10, 175, 50, 50, str(rnd(1,6)), BLACK)
+    d5 = boxes.Text_box(window, 10, 10, 50, 50, str(rnd(1,6)), BLACK)
 
-    pew_safe = pygame.mixer.Sound("sounds/click.mp3")
-    spy_yes = pygame.mixer.Sound("sounds/spy_yes.mp3")
-    pew_bang = pygame.mixer.Sound("sounds/vine-boom.mp3")
-    demo_glue = pygame.mixer.Sound("sounds/demo_glue.mp3")
-    demo_idiot = pygame.mixer.Sound("sounds/demo_idiot.mp3")
-    engi_ugly = pygame.mixer.Sound("sounds/engi_ugly.mp3")
-    nope  = pygame.mixer.Sound("sounds/nope.mp3")
-    lockednloaded = pygame.mixer.Sound("sounds/Legacy_locknload.ogg")
-    enemydown = pygame.mixer.Sound("sounds/Legacy_enemydown.ogg")
-    dead_ringer = pygame.mixer.Sound("sounds/dead_ringer.mp3")
-    kermit = pygame.mixer.Sound("sounds/jackfilms_kermit.mp3")
-    letmedie = pygame.mixer.Sound("sounds/asdf1.mp3")
-    spy1 = pygame.mixer.Sound("sounds/spy1.mp3")
-    spy2 = pygame.mixer.Sound("sounds/spy2.mp3")
-    
-    safe_sounds = [pew_safe,spy_yes,letmedie,kermit]
-    revives = [lockednloaded, dead_ringer]
-    deaths = [pew_bang,enemydown,spy1,spy2,demo_glue,demo_idiot,engi_ugly,nope]
-
-    sounds = [safe_sounds, revives, deaths]
+    buttons = [reset]
 
     # ADD ALL OBJECTS/CLASSES ABOVE HERE
     run = True
