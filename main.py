@@ -10,7 +10,6 @@ from colors import *
 from pygame_config import *
 import classes_and_objects.shapes as shapes
 import classes_and_objects.boxes as boxes
-import liar_bar
 
 def init_game():
     """Initiates Pygame, Pygame.font, and sets the Screen window and caption"""
@@ -24,20 +23,23 @@ def init_game():
     return window
 
 # Draw Function to update graphics
-def draw(window, buttons):
+def draw(window, buttons, dice):
     """DRAW FUNCTION | allows screen graphics to be added"""
     #BACKGROUND
-    window.fill(WHITE) # 15
+    window.fill(COTTON_CANDY) # 15
     
 
     #FOREGROUND
+    for d in dice:
+        d.draw_textbox()
+
     for button in buttons:
         button.draw_textbox()
 
     #UPDATE DISPLAY
     pygame.display.update()
 
-def handle_events(liars, buttons, sounds):
+def handle_events(buttons,dice,sounds):
     """Handles any pygame event such as key input"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT: # QUIT
@@ -45,61 +47,25 @@ def handle_events(liars, buttons, sounds):
         
         if event.type == pygame.MOUSEBUTTONDOWN:
             if buttons[0].check_clicked():
-                liars.p1_pew.pull_trigger()
+                
+                for d in dice:
+                    d.update_text(str(rnd(1,6)))
 
-                if liars.p1_pew.status == False:
-                    buttons[0].change_not_hover_color(COMMUNIST_RED)
-                    buttons[0].change_hover_color(REPUBLICAN_RED)
-                    sounds[2][0].play()
-                    sounds[2][rnd(1,len(sounds[2]) - 1)].play()
-                else:
-                    sounds[0][0].play()
-                    sounds[0][rnd(1,len(sounds[0]) - 1)].play()
+                sounds[0].play()
             if buttons[1].check_clicked():
-                liars.p2_pew.pull_trigger()
 
-                if liars.p2_pew.status == False:
-                    buttons[1].change_not_hover_color(COMMUNIST_RED)
-                    buttons[1].change_hover_color(REPUBLICAN_RED)
-                    sounds[2][0].play()
-                    sounds[2][rnd(1,len(sounds[2]) - 1)].play()
-                else:
-                    sounds[0][0].play()
-                    sounds[0][rnd(1,len(sounds[0]) - 1)].play()
-            if buttons[2].check_clicked():
-                liars.p3_pew.pull_trigger()
+                if buttons[1].text == "UNHIDE":
 
-                if liars.p3_pew.status == False:
-                    buttons[2].change_not_hover_color(COMMUNIST_RED)
-                    buttons[2].change_hover_color(REPUBLICAN_RED)
-                    sounds[2][0].play()
-                    sounds[2][rnd(1,len(sounds[2]) - 1)].play()
-                else:
-                    sounds[0][0].play()
-                    sounds[0][rnd(1,len(sounds[0]) - 1)].play()
-            if buttons[3].check_clicked():
-                liars.p4_pew.pull_trigger()
+                    buttons[1].text = "HIDE"
 
-                if liars.p4_pew.status == False:
-                    buttons[3].change_not_hover_color(COMMUNIST_RED)
-                    buttons[3].change_hover_color(REPUBLICAN_RED)
-                    sounds[2][0].play()
-                    sounds[2][rnd(1,len(sounds[2]) - 1)].play()
-                else:
-                    sounds[0][0].play()
-                    sounds[0][rnd(1,len(sounds[0]) - 1)].play()
+                    buttons[1].rect = pygame.Rect(5, 300, 110, 20)
+                elif buttons[1].text == "HIDE":
 
-            if buttons[4].check_clicked():
+                    buttons[1].text = "UNHIDE"
 
-                for pew in liars.pews:
-                    pew.reset()
-                    sounds[1][rnd(0,len(sounds[1]) - 1)].play()
+                    buttons[1].rect = pygame.Rect(5, 5, 110,320)
 
-                for button in buttons:
-                    button.change_not_hover_color(THAYER_GREEN)
-                    button.change_hover_color(LIME)
-
-            
+                sounds[1].play()
 
                 
 
@@ -118,15 +84,20 @@ def main(): # MAIN FUNCTION
     clock = pygame.time.Clock()
     # ADD ALL OBJECTS/CLASSES BELOW HERE
 
-    reset = boxes.Button (window, SCREEN_WIDTH//2 -25, SCREEN_HEIGHT//2 - 25, 50,50,"RESET",BLACK)
+    sounds = [pygame.mixer.Sound("sounds/swoosh.mp3"),pygame.mixer.Sound("sounds/trapdoor.mp3")]
 
-    d1 = boxes.Text_box(window, 10, 10, 50, 50, str(rnd(1,6)), BLACK)
-    d2 = boxes.Text_box(window, 10, 65, 50, 50, str(rnd(1,6)), BLACK)
-    d3 = boxes.Text_box(window, 10, 120, 50, 50, str(rnd(1,6)), BLACK)
-    d4 = boxes.Text_box(window, 10, 175, 50, 50, str(rnd(1,6)), BLACK)
-    d5 = boxes.Text_box(window, 10, 10, 50, 50, str(rnd(1,6)), BLACK)
+    reset = boxes.Button (window, SCREEN_WIDTH//2 -50, SCREEN_HEIGHT//2 - 25, 100,50,"REROLL",BLACK)
+    hide = boxes.Button (window, 5, 5, 110,320,"UNHIDE",BLACK,PURPLE_GUY,THANOS)
 
-    buttons = [reset]
+    d1 = boxes.Text_box(window, 50, 10, 50, 50, str(rnd(1,6)), BLACK)
+    d2 = boxes.Text_box(window, 50, 65, 50, 50, str(rnd(1,6)), BLACK)
+    d3 = boxes.Text_box(window, 50, 120, 50, 50, str(rnd(1,6)), BLACK)
+    d4 = boxes.Text_box(window, 50, 175, 50, 50, str(rnd(1,6)), BLACK)
+    d5 = boxes.Text_box(window, 50, 235, 50, 50, str(rnd(1,6)), BLACK)
+
+    dice = [d1,d2,d3,d4,d5]
+
+    buttons = [reset,hide]
 
     # ADD ALL OBJECTS/CLASSES ABOVE HERE
     run = True
@@ -134,11 +105,11 @@ def main(): # MAIN FUNCTION
 
         clock.tick(FPS) # FPS Tick
 
-        run = handle_events(liars, buttons,sounds)
+        run = handle_events(buttons,dice,sounds)
         
 
         
-        draw(window, buttons) # UPDATES SCREEN
+        draw(window, buttons,dice) # UPDATES SCREEN
 
     pygame.quit()
     sys.exit()
