@@ -181,13 +181,16 @@ class Image_Button(Image_box):
 
         self.hover_image = pygame.image.load(new_image).convert_alpha()
 
+    def switch_image(self, other_image):
+        self.image = other_image
+
     def check_hover(self):
         mouse_pos = pygame.mouse.get_pos()
 
         if self.rect.collidepoint(mouse_pos):
-            self.change_image(self.hover_image)
+            self.switch_image(self.hover_image)
         else:
-            self.change_image(self.not_hover_image)
+            self.switch_image(self.not_hover_image)
 
     def check_clicked(self):
         mouse_pos = pygame.mouse.get_pos()

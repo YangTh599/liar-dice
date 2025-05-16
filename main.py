@@ -33,8 +33,8 @@ def draw(window, buttons, dice):
     for d in dice:
         d.draw_textbox()
 
-    for button in buttons:
-        button.draw_textbox()
+    buttons[0].draw_image()
+    buttons[1].draw_textbox()
 
     #UPDATE DISPLAY
     pygame.display.update()
