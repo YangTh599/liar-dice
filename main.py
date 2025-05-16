@@ -86,7 +86,10 @@ def main(): # MAIN FUNCTION
 
     sounds = [pygame.mixer.Sound("sounds/swoosh.mp3"),pygame.mixer.Sound("sounds/trapdoor.mp3")]
 
-    reset = boxes.Button (window, SCREEN_WIDTH//2 -50, SCREEN_HEIGHT//2 - 25, 100,50,"REROLL",BLACK)
+    # reset = boxes.Button (window, SCREEN_WIDTH//2 -50, SCREEN_HEIGHT//2 - 25, 100,50,"REROLL",BLACK)
+    reset = boxes.Image_Button(window, SCREEN_WIDTH//2 -50, SCREEN_HEIGHT//2 - 25, 100,100, "images/matpat.png", "images/markiplier.png")
+    reset.not_hover_image = pygame.transform.scale(reset.not_hover_image, (100, 100))
+    reset.hover_image = pygame.transform.scale(reset.hover_image, (100, 100))
     hide = boxes.Button (window, 5, 5, 110,320,"UNHIDE",BLACK,PURPLE_GUY,THANOS)
 
     d1 = boxes.Text_box(window, 50, 10, 50, 50, str(rnd(1,6)), BLACK)

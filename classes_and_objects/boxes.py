@@ -161,6 +161,40 @@ class Button(Text_box):
             return True
         else:
             return False
+        
+class Image_Button(Image_box):
+
+    def __init__(self,window, x, y, width, height, image, hover_image=None, rotation = 0):
+        super().__init__(window, x, y, width, height, image, rotation)
+
+        self.not_hover_image = pygame.image.load(image).convert_alpha()
+        if hover_image:
+            self.hover_image = pygame.image.load(hover_image).convert_alpha()
+        else:
+            self.hover_image = pygame.image.load(image).convert_alpha()
+        
+    def change_image(self, new_image):
+        # super().change_image(new_image)
+        self.not_hover_image = pygame.image.load(new_image).convert_alpha()
+
+    def change_hover_image(self, new_image):
+
+        self.hover_image = pygame.image.load(new_image).convert_alpha()
+
+    def check_hover(self):
+        mouse_pos = pygame.mouse.get_pos()
+
+        if self.rect.collidepoint(mouse_pos):
+            self.change_image(self.hover_image)
+        else:
+            self.change_image(self.not_hover_image)
+
+    def check_clicked(self):
+        mouse_pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(mouse_pos):
+            return True
+        else:
+            return False
 
 
 
